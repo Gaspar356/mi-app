@@ -7,9 +7,18 @@ const sequelize = new Sequelize(
   process.env.DB_PASS,
   {
     host: process.env.DB_HOST,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    define: {
+      underscored: true,
+      timestamps: true
+    }
   }
 );
+
+sequelize.authenticate()
+  .then(() => console.log('Conexión a la base de datos establecida.'))
+  .catch(err => console.error('No se pudo conectar a la base de datos:', err));
+
 
 const User = require('./user')(sequelize, DataTypes);
 const Category = require('./category')(sequelize, DataTypes);
