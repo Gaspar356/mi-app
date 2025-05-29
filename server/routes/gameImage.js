@@ -13,4 +13,14 @@ router.get('/:gameId', async (req, res) => {
   res.json(images);
 });
 
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  const deleted = await GameImage.destroy({ where: { id } });
+  if (deleted) {
+    res.status(204).send();
+  } else {
+    res.status(404).json({ error: 'Image not found' });
+  }
+});
+
 module.exports = router;
